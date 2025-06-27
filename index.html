@@ -1,1 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>🐾 Pet Simulator Deluxe</title>
+  <style>
+    body {
+      font-family: "Comic Sans MS", cursive;
+      text-align: center;
+      background-color: #e3f2fd;
+      color: #0d47a1;
+      padding: 20px;
+    }
+    #pet {
+      font-size: 80px;
+      margin: 30px;
+      transition: transform 0.3s ease;
+    }
+    button {
+      padding: 10px 25px;
+      margin: 10px;
+      font-size: 18px;
+      background: #bbdefb;
+      border: none;
+      border-radius: 12px;
+      color: #0d47a1;
+      cursor: pointer;
+    }
+    #status, #nameDisplay {
+      font-size: 22px;
+      margin-top: 20px;
+    }
+    #moodLog {
+      font-size: 16px;
+      margin-top: 30px;
+      color: #1565c0;
+      max-height: 200px;
+      overflow-y: auto;
+      border-top: 1px dashed #90caf9;
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐾 Virtual Pet Simulator Deluxe</h1>
+
+  <input type="text" id="nameInput" placeholder="Name your pet!" />
+  <button onclick="setName()">Set Name</button>
+  <div id="nameDisplay"></div>
+
+  <div id="pet">🐶</div>
+
+  <div>
+    <button onclick="feed()">🍖 Feed</button>
+    <button onclick="play()">🎾 Play</button>
+    <button onclick="rest()">💤 Nap</button>
+  </div>
+
+  <div id="status">Mood: Happy</div>
+  <div id="moodLog">Mood history will appear here...</div>
+
+  <script>
+    let mood = "Happy";
+    let petName = "";
+    const petEl = document.getElementById("pet");
+    const statusEl = document.getElementById("status");
+    const nameEl = document.getElementById("nameDisplay");
+    const logEl = document.getElementById("moodLog");
+
+    function setName() {
+      const input = document.getElementById("nameInput").value.trim();
+      if (input) {
+        petName = input;
+        nameEl.textContent = `🐾 ${petName} the Pet`;
+        logEl.innerHTML += `➤ Hello, ${petName}!<br>`;
+      }
+    }
+
+    function updateMood(newMood, emoji) {
+      mood = newMood;
+      petEl.textContent = emoji;
+      statusEl.textContent = `Mood: ${mood}`;
+      logEl.innerHTML += `➤ ${petName || "Pet"} is now ${mood}<br>`;
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function feed() {
+      updateMood("Full and Happy!", "😋");
+    }
+
+    function play() {
+      updateMood("Playful and Excited!", "😄");
+      petEl.style.transform = "scale(1.2)";
+      setTimeout(() => petEl.style.transform = "scale(1)", 300);
+    }
+
+    function rest() {
+      updateMood("Sleepy zZz...", "😴");
+    }
+
+    setInterval(() => {
+      const moods = ["Hungry", "Bored", "Curious", "Dozing", "Wants belly rubs"];
+      const randomMood = moods[Math.floor(Math.random() * moods.length)];
+      if (!["Full and Happy!", "Playful and Excited!", "Sleepy zZz..."].includes(mood)) {
+        updateMood(randomMood, "🐶");
+      }
+    }, 12000);
+  </script>
+</body>
+</html>
 
